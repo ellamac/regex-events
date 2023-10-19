@@ -9,7 +9,7 @@ type EventProps = {
 };
 
 const Event = ({ starts, type, ends, name, location }: EventProps) => {
-  if (!event) return <></>;
+  if (!name || !starts) return <></>;
 
   const timeToShow = () => {
     let textToShow = '';

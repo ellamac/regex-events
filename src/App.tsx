@@ -25,6 +25,7 @@ function App() {
     if (eventObject && eventObject?.name && eventObject?.startDate) {
       setEvent(eventObject);
     }
+    console.log('---event object----', eventObject);
     return eventObject;
   };
 
@@ -37,6 +38,7 @@ function App() {
   };
 
   const dateToICSTimestamp = (d: Date): string => {
+    console.log('-----date-----ics-----', d);
     const date = dateToISOLikeButLocal(d)
       .replace(/:|\.|-/g, '')
       .slice(0, -4);

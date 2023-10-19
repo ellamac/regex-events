@@ -1,18 +1,17 @@
-
 import '../styles/events.css';
 
-type EventProps= {
-  starts: Date,
-  type: string,
-  ends?: Date,
-  name: string,
-  location?: string
-}
+type EventProps = {
+  starts: Date;
+  type: 'inbetweenDay' | 'firstDay' | 'lastDay';
+  ends: Date;
+  name: string;
+  location?: string;
+};
 
-const Event = ({starts, type, ends, name, location}: EventProps) => {
+const Event = ({ starts, type, ends, name, location }: EventProps) => {
   if (!event) return <></>;
 
-  const timeToShow = (type, starts, ends) => {
+  const timeToShow = () => {
     let textToShow = '';
     let time = '';
     switch (type) {
@@ -40,7 +39,7 @@ const Event = ({starts, type, ends, name, location}: EventProps) => {
   return (
     <section className='event'>
       <h2 className='date'>{starts?.toLocaleDateString()}</h2>
-      <p className='time'>{timeToShow(type, starts, ends)}</p>
+      <p className='time'>{timeToShow()}</p>
       <p className='name'>{name}</p>
       <p className='location'>{location ? '@ ' + location : ''}</p>
     </section>

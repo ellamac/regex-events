@@ -1,73 +1,70 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import Event from './Event';
 import '../styles/events.css';
-const Events = ({ eventObject }) => {
-  const [event, setEvent] = useState({});
-  const [events, setEvents] = useState([]);
+import { Event as EventType } from '../helpers/types';
+
+type EventsProps = {
+  eventObject: EventType;
+};
+
+const Events = ({ eventObject }: EventsProps) => {
+  const [event, setEvent] = useState<EventType>({
+    name: '',
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   useEffect(() => {
     setEvent(eventObject);
-    setEvents(createEvents(eventObject));
   }, [eventObject, event]);
 
-  useEffect(() => {}, [events]);
+  const createEvents = (ev: EventType): JSX.Element[] => {
+    // how many days are inbetween start and end
+    // (0 = start and end are the same day, 1 = start and end are right after each other (eg. mon-tue) )
+    const dayCount = Math.floor(
+      (ev.endDate.getTime() - ev.startDate.getTime()) / (1000 * 3600 * 24)
+    );
 
-  const createEvents = (ev) => {
-    const starts = ev.startTime || ev.startDate;
-    const ends = ev.endTime || ev.endDate || starts || null;
-    let currentDate = new Date(starts);
-    let currentEvent = {
-      name: ev.name,
-      location: ev.location,
-      starts,
-      ends,
-      type: 'firstDay',
-    };
-
-    let evs = [];
-
-    if (ends?.toDateString() !== starts?.toDateString()) {
-      while (
-        new Date(currentDate?.toDateString()) <= new Date(ends?.toDateString())
-      ) {
-        currentEvent = {
-          ...currentEvent,
-          starts: new Date(currentDate),
-          type:
-            currentDate.toDateString() === starts.toDateString()
-              ? 'firstDay'
-              : currentDate.toDateString() === ends.toDateString()
-              ? 'lastDay'
-              : 'inbetweenDay',
-        };
-        evs.push(currentEvent);
-
-        currentDate.setDate(currentDate.getDate() + 1);
+    const evs = [];
+    evs.push(
+      <Event
+        starts={ev.startDate}
+        ends={ev.endDate}
+        type='firstDay'
+        name={ev.name}
+        location={ev.location}
+      />
+    );
+    if (dayCount > 0) {
+      for (let i = 1; i < dayCount; i++) {
+        const date = new Date(ev.startDate);
+        date.setDate(date.getDate() + i);
+        evs.push(
+          <Event
+            starts={date}
+            ends={ev.endDate}
+            type={'inbetweenDay'}
+            name={ev.name}
+            location={ev.location}
+          />
+        );
       }
-    } else evs.push(currentEvent);
-
+      evs.push(
+        <Event
+          starts={ev.endDate}
+          ends={ev.endDate}
+          type='lastDay'
+          name={ev.name}
+          location={ev.location}
+        />
+      );
+    }
     return evs;
   };
 
   if (!eventObject) return <p>eioo</p>;
-  return (
-    <section className='events'>
-      {events && events.length > 0 && events[0].name ? (
-        events.map((e, i) => <Event
-       key={i}
-       name={e.name}
-       starts={e.starts}
-       ends={e.ends}
-       location={e.location}
-       type={e.type}
-        />)
-      ) : (
-        <></>
-      )}
-    </section>
-  );
+  return <section className='events'>{createEvents(event)}</section>;
 };
 
 export default Events;
-

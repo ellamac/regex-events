@@ -1,10 +1,16 @@
-const stringToDate = (string, startDate) => {
+import { Event } from './types';
+
+const stringToDate = (string: string, startDate?: Date): Date | null => {
   /* if string is not null
   make 25.12. -> 2023/12/25 (date) */
 
   const date = string
     ? new Date(
-        string.split('.').concat(new Date().getFullYear()).reverse().join('/')
+        string
+          .split('.')
+          .concat(new Date().getFullYear().toString())
+          .reverse()
+          .join('/')
       )
     : null;
 
@@ -20,20 +26,24 @@ const stringToDate = (string, startDate) => {
 
   return date;
 };
-const addTimeToDate = (time, startDate, endDate) => {
+const addTimeToDate = (
+  time: string,
+  startDate: Date,
+  endDate?: Date
+): Date | null => {
   const hoursMinutes = time ? time.split('.') : null;
   const timed = hoursMinutes
     ? new Date(
         endDate
-          ? endDate.setHours(hoursMinutes[0], hoursMinutes[1])
-          : startDate.setHours(hoursMinutes[0], hoursMinutes[1])
+          ? endDate.setHours(Number(hoursMinutes[0]), Number(hoursMinutes[1]))
+          : startDate.setHours(Number(hoursMinutes[0]), Number(hoursMinutes[1]))
       )
     : null;
   return timed;
 };
 
 /* this function is based (but later expanded) on a result from chatGPT */
-const extractEventDetails = (inputString) => {
+const extractEventDetails = (inputString: string): Event | null => {
   const eventDetailsRegex =
     /^(.+?)\s+(\d{1,2}\.\d{1,2}\.)(?:\s*-\s*(\d{1,2}\.\d{1,2}\.))?(?:\s+klo\s+(\d{1,2}\.\d{1,2})(?:-(\d{1,2}\.\d{1,2}))?)?(?:\s+(.+))?$/;
 
@@ -41,7 +51,7 @@ const extractEventDetails = (inputString) => {
 
   if (matches && matches[1] && matches[2]) {
     const name = matches[1];
-    const startDate = stringToDate(matches[2]);
+    const startDate = stringToDate(matches[2]) || new Date();
     const endDate = stringToDate(matches[3], startDate) || undefined;
     const startTime = addTimeToDate(matches[4], startDate) || undefined;
     const endTime = addTimeToDate(matches[5], startDate, endDate) || undefined;
@@ -49,10 +59,8 @@ const extractEventDetails = (inputString) => {
 
     return {
       name,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
+      startDate: startTime || startDate,
+      endDate: endTime || endDate || startTime || startDate,
       location,
     };
   } else {

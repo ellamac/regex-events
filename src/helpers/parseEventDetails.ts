@@ -3,11 +3,11 @@ import { Event } from './types';
 const stringToDate = (string: string, startDate?: Date): Date | null => {
   /* if string is not null
   make 25.12. -> 2023/12/25 (date) */
-
   const date = string
     ? new Date(
         string
           .split('.')
+          .filter((s) => s !== '')
           .concat(new Date().getFullYear().toString())
           .reverse()
           .join('/')

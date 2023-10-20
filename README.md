@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+# Regex events
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite
 
-Currently, two official plugins are available:
+A website for creating quickly ics.-files. A single line of text (that follows a predetermined syntax) is parsed into a calendar event that includes beginning date and time, end date and time, and location each in their correct places.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Why? I have a bad habit of adding events to my phone calendar just by writing the time and location to the name/summary input. I found it annoying having to click and scroll through the dates and times.
 
-## Expanding the ESLint configuration
+## How to use
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+> [!NOTE]
+> The site is in Finnish and follows the local timezone and Finnish date syntax.
 
-- Configure the top-level `parserOptions` property like this:
+1. Works best and has been tested on iPhone and Safari because the combination handles adding .ics-files to my apple calendar the best. Works somewhat on Chrome and desktop.
+2. Go to [ellamac.github.io/regex-events/](https://ellamac.github.io/regex-events/) on **Safari**.
+3. Write your event following this syntax:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+   - Event name (must have!)
+   - start date as DD.MM. (must have!)
+   - end date as -DD.MM. (optional)
+   - start time as klo hh.mm (optional)
+   - end time as -hh.mm (optional)
+   - location
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+   For example
+
+   > Christmas holiday 20.12.-30.12. klo 10.00-22.25 Spain
+
+4. Check the preview and confirm everythings ok
+5. Click 'tallenna tapahtuma kalenteriin' to create and save the ics.-file to your device. With the iPhone+Safari combination it takes you straight to the Apple calendar app and you just need to click save there once to add it to your calendar.

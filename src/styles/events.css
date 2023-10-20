@@ -5,32 +5,43 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  gap: 1em;
+  gap: 1rem;
 }
 
 .event {
   flex: 1 1 auto;
   max-width: 25%;
   min-width: 20%;
+
   aspect-ratio: 1/1;
   background-color: var(--main-mid-color);
   border: 1px solid var(--main-highlight-color);
   box-shadow: 0 0 4px 0 var(--main-highlight-color);
   border-radius: 1em;
-  padding: 1em;
+  padding: 1rem;
+
   text-align: left;
 
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-evenly;
   align-items: flex-start;
+
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    max-width: initial;
+    min-width: initial;
+    aspect-ratio: initial;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
   > * {
     margin: 0;
     padding: 0;
   }
   > h2.date {
     color: var(--main-highlight-color);
-    font-size: large;
+    font-size: var(--font-size-h4);
     font-style: normal;
     font-weight: 700;
   }
@@ -39,7 +50,7 @@
     font-weight: 400;
   }
   > p.name {
-    font-size: x-large;
+    font-size: var(--font-size-h3);
     font-style: italic;
     font-weight: 900;
   }

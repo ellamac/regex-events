@@ -1,7 +1,7 @@
 #root {
-  height: 100vh;
   width: 100vw;
   padding: 0 25vw;
+  margin-bottom: 6rem;
   display: flex;
   flex-flow: column nowrap;
   gap: 3rem;
@@ -25,8 +25,9 @@ form#newEventForm > label {
     background-color: var(--main-white-color);
     border-radius: 2rem;
     border: none;
-    height: 1rem;
+    height: 1em;
     color: var(--main-black-color);
-    padding: 0.5rem 1rem 0.55rem;
+    padding: 0.5em 1em 0.55em;
+    font-size: var(--font-size-p);
   }
 }

@@ -38,7 +38,14 @@ const Event = ({ starts, type, ends, name, location }: EventProps) => {
   };
   return (
     <section className='event'>
-      <h2 className='date'>{starts?.toLocaleDateString()}</h2>
+      <h2 className='date'>
+        {starts?.toLocaleDateString(undefined, {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+        })}
+      </h2>
       <p className='time'>{timeToShow()}</p>
       <p className='name'>{name}</p>
       <p className='location'>{location ? '@ ' + location : ''}</p>

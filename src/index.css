@@ -75,15 +75,25 @@ button {
   font-weight: 700;
   color: var(--main-white-color);
   font-family: inherit;
-  background-color: var(--main-light-color);
+  background-color: var(--main-highlight-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: var(--main-highlight-color);
-  box-shadow: 0 0 4px 0 var(--main-highlight-color);
+  border-color: var(--main-mid-color);
+  box-shadow: 0 0 10px 0 var(--main-mid-color);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  background-color: var(--main-white-color);
+  border-radius: 2rem;
+  border: none;
+  height: 1em;
+  color: var(--main-black-color);
+  padding: 0.5em 1em 0.55em;
+  font-size: var(--font-size-p);
 }
